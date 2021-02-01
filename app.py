@@ -45,5 +45,5 @@ def authors():
 @app.route("/add/", methods=["POST"])
 def add():
     f = request.form
-    print(f["author"], f["book"])
+    # print(f["author"], f["book"])
     return "форма получена"
