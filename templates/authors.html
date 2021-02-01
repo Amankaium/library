@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Список авторов</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='mystyle.css') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='lib.jpg') }}" type="image/x-icon">
+</head>
+<body>
+    <a href="{{ url_for('authors') }}">Авторы</a>
+    <a id="book" href="{{ url_for('books') }}">Книги</a>
+    <h1 class="sensation">Тут будет список авторов или источников:</h1>
+    {% for author in authors %}
+        <span class="author">{{ author }}</span><hr>
+    {% endfor %}
+    <hr>
+    <table>
+        <thead>
+            <tr>
+                <th>Автор или источник</th>
+                <th>Кол-во произведений</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for author in authors %}
+                <tr>
+                    <td>{{ author }}</td>
+                    <td>3</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

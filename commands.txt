@@ -1,0 +1,12 @@
+mkdir projects
+cd projects
+mkdir rarity
+cd rarity
+pip install flask
+pip freeze
+# после создания app.py
+flask run
+# Ctrl + C для остановки сервера
+flask run --host 0.0.0.0
+# http://192.168.88.177:5000/
+# http://8bf8947e2385.ngrok.io/
