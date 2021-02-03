@@ -13,23 +13,25 @@ def books():
     excel = load_workbook("tales.xlsx")
     page = excel["Лист1"]
 
+    object_list = [[tale.value, tale.offset(column=1).value] for tale in page["A"][1:]]
+    return render_template("books.html", object_list=object_list)
     # tales = [tale.value for tale in page["A"]][1:]
-    tales = []
-    for tale in page["A"][1:]:
-        tales.append(tale.value)
+    # tales = []
+    # for tale in page["A"][1:]:
+    #     tales.append(tale.value)
 
-    authors = [author.value for author in page["B"]][1:]   
+    # authors = [author.value for author in page["B"]][1:]   
 
-    html = """
-        <a href="/authors">Авторы</a>
-        <a href="/books">Книги</a>
-        <h1 style="color: red">Тут будет список книг:</h1>
-    """
+    # html = """
+    #     <a href="/authors">Авторы</a>
+    #     <a href="/books">Книги</a>
+    #     <h1 style="color: red">Тут будет список книг:</h1>
+    # """
 
-    for i in range(len(tales)):
-        html += f"<h2>{tales[i]} - {authors[i]}</h2>"
+    # for i in range(len(tales)):
+    #     html += f"<h2>{tales[i]} - {authors[i]}</h2>"
 
-    return html
+    # return html
 
 
 @app.route("/authors/")
