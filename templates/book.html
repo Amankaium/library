@@ -6,6 +6,10 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>{{ obj }}</h1>
+    <h1>{{ obj.0 }}</h1>
+    <h3>{{ obj.1 }}</h3>
+    {% if obj.2 %}
+        <img src="{{ obj.2 }}" alt="tale_photo">
+    {% endif %}
 </body>
 </html>
