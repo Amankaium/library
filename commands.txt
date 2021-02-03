@@ -10,3 +10,9 @@ flask run
 flask run --host 0.0.0.0
 # http://192.168.88.177:5000/
 # http://8bf8947e2385.ngrok.io/
+
+
+# команда для загрузки изменений на github
+git add .
+git commit -m "comments of commit"
+git push
