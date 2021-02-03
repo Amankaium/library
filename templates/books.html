@@ -10,7 +10,11 @@
     <a href="/books">Книги</a>
     <h1 style="color: red">Тут будет список книг:</h1>
     {% for object in object_list %}
-        <h2>{{ object.0 }} - {{ object.1 }}</h2>
+        <h2>
+            <a href="{{ url_for('book', num=loop.index-1) }}">
+                {{ object.0 }} - {{ object.1 }}
+            </a>
+        </h2>
     {% endfor %}
 </body>
 </html>
