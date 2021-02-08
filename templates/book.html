@@ -22,6 +22,9 @@
             {% if obj.2 %}
                 <img src="{{ obj.2 }}" alt="tale_photo">
             {% endif %}
+            <br><br>
+            <a class="btn btn-warning btn-lg" href="{{ url_for('book_edit', num=obj.3) }}">Изменить</a>
+            <br><br>
         </div>
     </div>
 </body>

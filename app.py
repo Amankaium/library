@@ -63,4 +63,30 @@ def book(num): # 5
     page = excel["Лист1"]
     object_list = [[tale.value, tale.offset(column=1).value, tale.offset(column=2).value] for tale in page["A"][1:]]
     obj = object_list[int(num)] # object_list[5]
+    obj.append(num)
     return render_template("book.html", obj=obj) # **kwargs
+
+
+@app.route("/book/<num>/edit/")
+def book_edit(num):
+    num = int(num) + 2
+    excel_file = load_workbook("tales.xlsx")
+    page = excel_file["Лист1"]
+    tale = page[f"A{num}"]
+    author = page[f"B{num}"]
+    image = page[f"C{num}"]
+    obj = [tale.value, author.value, image.value, num]
+    return render_template("book_edit.html", obj=obj)
+
+
+@app.route("/book/<num>/save/", methods=["POST"])
+def book_save(num):
+    num = int(num)
+    excel_file = load_workbook("tales.xlsx")
+    page = excel_file["Лист1"]
+    form = request.form
+    page[f"A{num}"] = form["tale"]
+    page[f"B{num}"] = form["author"]
+    page[f"C{num}"] = form["image"]
+    excel_file.save("tales.xlsx")
+    return "Сохранено!"
