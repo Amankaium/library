@@ -148,3 +148,25 @@ def book_save(num):
     page[f"C{num}"] = form["image"]
     excel_file.save("tales.xlsx")
     return "Сохранено!"
+
+
+@app.route("/<int:id>/", methods=["GET", "POST"])
+def db_book_update(id):
+    message = ''
+    if request.method == "POST":
+        name = request.form.get("tale")
+        author = request.form.get("author")
+        image = request.form.get("image")
+        db.execute(f'''
+            UPDATE "Book"
+            SET 
+                name='{name}',
+                author='{author}',
+                image='{image}'
+            WHERE id={id};
+        ''')
+        db.commit()
+        message = "Изменения сохранены"
+
+    book_object = db.execute(f'SELECT * FROM "Book" WHERE id={id};').first()
+    return render_template("database_book_update.html", book_object=book_object, message=message)

@@ -11,7 +11,7 @@
     <h1 style="color: red">Тут будет список книг:</h1>
     {% for object in object_list %}
         <h2>
-            <a href="#">
+            <a href="{{ url_for('db_book', id=object.id) }}">
                 {{ object.name }} - {{ object.author }}
             </a>
         </h2>

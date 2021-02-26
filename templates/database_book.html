@@ -23,7 +23,7 @@
                 <img src="{{ obj.image }}" alt="tale_photo">
             {% endif %}
             <br><br>
-            <a class="btn btn-warning btn-lg" href="#">Изменить</a>
+            <a class="btn btn-warning btn-lg" href="{{ url_for('db_book_update', id=obj.id) }}">Изменить</a>
             <br><br>
         </div>
     </div>

@@ -8,13 +8,14 @@
 <body>
     <h3>Редактировать запись:</h3>
     <form method="POST">
-        <input type="text" name="tale" placeholder="Название книги" value="{{ obj.0 }}">
+        <input type="text" name="tale" placeholder="Название книги" value="{{ book_object.name }}">
         <br><br>
-        <input type="text" name="author" placeholder="Автор" value="{{ obj.1 }}">
+        <input type="text" name="author" placeholder="Автор" value="{{ book_object.author }}">
         <br><br>
-        <input type="text" name="image" placeholder="Ссылка на картинку" value="{{ obj.2 }}">
+        <input type="text" name="image" placeholder="Ссылка на картинку" value="{{ book_object.image }}">
         <br><br>
         <button>Сохранить</button>
     </form>
+    <h2>{{ message }}</h2>
 </body>
 </html>
