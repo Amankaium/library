@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <a href="{{ url_for('authors') }}">Авторы</a>
+    <a id="book" href="{{ url_for('books') }}">Книги</a>
+    <h3>Добавьте книгу в нашу библиотеку</h3>
+    <form action="{{ url_for('db_add') }}" method="POST">
+        <input type="text" placeholder="Автор" name="author">
+        <br><br>
+        <input type="text" placeholder="Книга" name="book">
+        <br><br>
+        <input type="text" placeholder="URL картинки" name="url">
+        <br><br>
+        <button>Добавить</button>
+    </form>
+</body>
+</html>

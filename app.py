@@ -1,20 +1,26 @@
 from flask import Flask, render_template, request
 from openpyxl import load_workbook
+from sqlalchemy.orm.session import sessionmaker
+from sqlalchemy.orm import scoped_session
+from database import engine, Book
 
 app = Flask(__name__)
+db = scoped_session(sessionmaker(bind=engine))
 
 @app.route("/")
 def homepage():
     return render_template("index.html")
 
 
+@app.route("/form/")
+def form():
+    return render_template("form.html")
+
+
+
 @app.route("/books/")
 def books():
-    excel = load_workbook("tales.xlsx")
-    page = excel["Лист1"]
-
-    object_list = [[tale.value, tale.offset(column=1).value] for tale in page["A"][1:]]
-    return render_template("books.html", object_list=object_list)
+    # v1
     # tales = [tale.value for tale in page["A"]][1:]
     # tales = []
     # for tale in page["A"][1:]:
@@ -33,6 +39,23 @@ def books():
 
     # return html
 
+    # v_2
+    # excel = load_workbook("tales.xlsx")
+    # page = excel["Лист1"]
+
+    # object_list = [[tale.value, tale.offset(column=1).value] for tale in page["A"][1:]]
+    # return render_template("books.html", object_list=object_list)
+
+    # v_3
+    # session = sessionmaker(engine)()
+    # books = session.query(Book)
+    # session.commit()
+
+    with engine.connect() as con:
+        books = con.execute("""SELECT * FROM "Book";""")
+
+    return render_template("books_table.html", object_list=books)
+
 
 @app.route("/authors/")
 def authors():
@@ -41,6 +64,15 @@ def authors():
     authors = {author.value for author in page["B"][1:]}
     return render_template(
         "authors.html", authors=list(authors)
+    )
+
+@app.route("/db/authors/")
+def db_authors():
+    with engine.connect() as con:
+        authors = con.execute('SELECT DISTINCT author FROM "Book";')
+ 
+    return render_template(
+        "database_authors.html", authors=authors
     )
 
 
@@ -54,6 +86,26 @@ def add():
     page[f"A{last}"] = f["book"]
     page[f"B{last}"] = f["author"]
     excel.save("tales.xlsx")
+    return "форма получена"
+
+
+@app.route("/db/add/", methods=["POST"])
+def db_add():
+    f = request.form
+    book = f["book"]
+    author = f["author"]
+    url = f["url"]    
+    
+    ids = db.execute('SELECT id FROM "Book" ORDER BY id DESC;')
+    max_id = ids.first().id
+    c_id = max_id + 1
+
+    db.execute(f'''
+        INSERT INTO "Book" (id, name, author, image)
+        VALUES ({c_id}, '{book}', '{author}', '{url}');''')
+    
+    db.commit()
+
     return "форма получена"
 
 
