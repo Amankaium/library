@@ -119,6 +119,12 @@ def book(num): # 5
     return render_template("book.html", obj=obj) # **kwargs
 
 
+@app.route("/db/book/<id>/")
+def db_book(id):
+    obj = db.execute(f'SELECT * FROM "Book" WHERE id = {id};').first()
+    return render_template("database_book.html", obj=obj)
+
+
 @app.route("/book/<num>/edit/")
 def book_edit(num):
     num = int(num) + 2
