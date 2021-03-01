@@ -8,6 +8,9 @@
 <body>
     <a href="/authors">Авторы</a>
     <a href="/books">Книги</a>
+    <form>
+        <input type="text" name="key_word"><button>Поиск</button>
+    </form>
     <h1 style="color: red">Тут будет список книг:</h1>
     {% for object in object_list %}
         <h2>

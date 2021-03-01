@@ -7,7 +7,7 @@ from database import engine, Book
 app = Flask(__name__)
 db = scoped_session(sessionmaker(bind=engine))
 
-@app.route("/")
+@app.route("/excel_add")
 def homepage():
     return render_template("index.html")
 
@@ -18,8 +18,8 @@ def form():
 
 
 
-@app.route("/books/")
-def books():
+# @app.route("/")
+# def books():
     # v1
     # tales = [tale.value for tale in page["A"]][1:]
     # tales = []
@@ -51,9 +51,22 @@ def books():
     # books = session.query(Book)
     # session.commit()
 
-    with engine.connect() as con:
-        books = con.execute("""SELECT * FROM "Book";""")
-
+@app.route("/")
+def books():
+    if 'key_word' in request.args:
+        key_word = request.args.get("key_word")
+        session = sessionmaker(engine)()
+        books = session.execute(f"""
+            SELECT * FROM "Book"
+            WHERE name LIKE '%{key_word}%'
+                OR author LIKE '%{key_word}%'
+            ;
+        """)
+        session.commit()
+    else:
+        with engine.connect() as con:
+            books = con.execute("""SELECT * FROM "Book";""")
+            print(books)
     return render_template("books_table.html", object_list=books)
 
 
